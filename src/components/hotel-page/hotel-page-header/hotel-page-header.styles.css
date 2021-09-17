@@ -1,0 +1,27 @@
+.hotel-info {
+    display: inline;
+}
+
+.hotel-info-extra {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hotel-rating {
+    margin-right: 50px;
+    background-color: rgb(255, 215, 0);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.hotel-rating-int {
+    font-weight: bold;
+}
+
+.hotel-rating-svg {   
+    padding-right: 5px;
+}
+
+.hotel-rating-svg svg {
+    color: rgb(255, 255, 255);
+}

@@ -1,0 +1,46 @@
+.hotel-page-container {
+    padding-top: 50px;
+    border: 1px solid rgb(192, 192, 192);
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.hotel-page-section {
+    padding-bottom: 25px;
+    ;
+}
+
+.hotel-page-header-container {
+    padding-left: 50px;
+    padding-right: 50px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.img-slider-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.hotel-page-information{
+    display: flex;
+    justify-content: center;
+}
+
+.hotel-page-description {
+    padding: 0 50px;
+    width: 50%;
+}
+
+.hotel-page-section.make-booking {
+    display: flex;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    border-top: 1px solid rgb(192, 192, 192);
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.hidden {
+    display: none;
+}

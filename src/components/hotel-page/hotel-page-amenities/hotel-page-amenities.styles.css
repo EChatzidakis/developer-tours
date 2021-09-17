@@ -1,0 +1,35 @@
+.hotel-page-amenities-table-container {
+    padding: 0 50px;
+}
+
+#hotel-page-amenities-table {
+    border-collapse: collapse;
+    border: 3px solid rgb(221, 221, 221);
+    width: 100%;
+}
+
+#hotel-page-amenities-table td {
+    border: 1px solid rgb(221, 221, 221);
+    padding: 8px;
+}
+
+.hotel-amenities-svg{
+    float: left;
+    margin-right: 5px;
+}
+
+.svg-false svg {
+    color: rgb(255,0,0);
+}
+
+.svg-true svg {
+    color: rgb(0,128,0);
+}
+
+.hotel-amenities-svg-true .svg-false {
+    display: none;
+}
+
+.hotel-amenities-svg-false .svg-true {
+    display: none;
+}

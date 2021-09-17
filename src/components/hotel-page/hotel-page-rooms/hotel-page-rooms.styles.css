@@ -1,0 +1,43 @@
+#hotel-page-rooms-table {
+    border-collapse: collapse;
+    border: 3px solid rgb(138, 138, 138);
+    width: 100%;
+}
+
+#hotel-page-rooms-table td,
+#hotel-page-rooms-table th {    
+    border: 1px solid rgb(221, 221, 221);
+    padding: 10px;
+    width: 33%;
+}
+
+#hotel-page-rooms-table th {
+    background-color: rgb(221, 221, 221);
+    border: 1px solid rgb(138, 138, 138);
+}
+
+.hotel-page-rooms-table-container {
+    padding: 0 25px;
+}
+
+.spn-room-name {
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+.room-amenities ul {
+    margin-left: 20px;
+}
+
+.amenity-item-true {
+    color: rgb(0,128,0);
+}
+
+.amenity-item-false {
+    color: rgb(255,0,0);
+}
+
+button.btn-disabled {
+    background-color: rgb(154 154 154);
+    cursor: default;
+}

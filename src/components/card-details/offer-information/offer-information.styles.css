@@ -1,0 +1,22 @@
+.offer-information {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+}
+
+.spn-charges-information {
+    cursor: default;
+}
+
+ul {
+    padding-left: 0;
+}
+
+button.btn-standard {
+    background-color: rgb(55 89 137);
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    cursor: pointer;
+    padding: 10px;
+}

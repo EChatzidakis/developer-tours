@@ -1,0 +1,16 @@
+.details-container {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 15px 5px 25px;
+}
+
+.details-separator {
+    display: inline-block;
+    padding-right: 25px;
+}
+
+@media screen and (max-width: 900px) {
+    .details-container {
+        flex-direction: column;
+    }
+}
