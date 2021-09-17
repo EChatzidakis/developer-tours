@@ -19,9 +19,13 @@ class HotelPage extends Component {
         }
     }
 
+    /**
+     * Event controller for the size of image slider.
+     * Fires on window resize.
+     */
     sliderResize = () => {
         const newSliderWidth = (window.innerWidth < 975 ? 360 : 850);
-        const newSliderHeight = (newSliderWidth == 850 ? 478 : 203);
+        const newSliderHeight = (newSliderWidth === 850 ? 478 : 203);
 
         const currentWidth = this.state.sliderWidth;
 

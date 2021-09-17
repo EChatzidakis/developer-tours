@@ -27,7 +27,6 @@ class MainContent extends Component {
         const hotelPage = this.props.content.hotelPage;
         const items = this.props.content.currentFilter.items;
         const highlightedOffer = items.filter(item => item.offer.id === hotelPage.highlightedOffer.offerId)[0];
-        console.log(items);
         return (
             <div id="main-content">
                 <HotelPage 

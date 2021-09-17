@@ -34,7 +34,7 @@ class HotelPageRooms extends Component {
             const amenities = room.amenities;
             const descr = room.description;
             const id = room.id;
-            const images = room.images;
+            // const images = room.images;
             const name = room.name;
 
             return (
@@ -111,16 +111,19 @@ class HotelPageRooms extends Component {
         );
     }
 
+    /**
+     * Event controller for selecting room.
+     * @param {event} e 
+     */
     handleClickEvent = (e) => {
-        const button = e.target;
+        //const button = e.target;
         const sections = [...document.getElementsByClassName('hotel-page-section')];
         sections.map((section) => {
-
             if (section.classList.contains("make-booking")) {
                 section.classList.remove('hidden');
             }
-            else {
-                section.classList.add('hidden');
+            else if (section.classList.contains("hotel-page-information-container") || section.classList.contains("hotel-rooms-container")) {
+                    section.classList.add('hidden');
             }
         });
     }

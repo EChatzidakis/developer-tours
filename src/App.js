@@ -105,6 +105,9 @@ class App extends Component {
     const offerId = button.getAttribute('offerid');
 
     this.getHotelPageContent(hotelId, roomId, offerId);
+
+    //scroll to top
+    window.scrollTo(0, 0);
   }
 
   render() {
