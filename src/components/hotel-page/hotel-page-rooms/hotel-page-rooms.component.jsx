@@ -130,7 +130,6 @@ class HotelPageRooms extends Component {
 
     render() {
 
-        console.log(this.props)
         return (
             <div className="hotel-page-rooms-table-container">
                 <table id="hotel-page-rooms-table">

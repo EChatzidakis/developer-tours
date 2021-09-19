@@ -1,11 +1,10 @@
 div.elem-group {
-    margin: 20px 0;
+    margin: 20px 5px;
 }
 
 div.elem-group.inlined {
-    width: 49%;
+    width: 30%;
     display: inline-block;
-    float: left;
     margin-left: 1%;
 }
 

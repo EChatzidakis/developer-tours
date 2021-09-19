@@ -4,6 +4,8 @@ import { Header } from './components/header/header.component';
 import { Footer } from './components/footer/footer.component';
 import MainContent from './components/main-content/main-content.component';
 
+import {DateFormatting}  from './modules/DateFormatting';
+
 class App extends Component {
 
   constructor() {
@@ -19,7 +21,7 @@ class App extends Component {
           }
         }
       },
-      dates: this.getDefaultDates(),
+      dates: DateFormatting({type: 'default', date: ''}),//this.getDefaultDates(),
       filter: '',
       isHomePage: true,
       bigHeader: true
@@ -27,7 +29,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getDefaultContent();
+    this.getDefaultContent({type: 'default', date: ''});
   }
 
   getDefaultContent() {
