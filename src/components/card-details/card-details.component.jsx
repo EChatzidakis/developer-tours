@@ -15,9 +15,25 @@ class CardDetails extends Component {
             },
 
         };
+        this.isComponentMounted = false;
     }
 
     componentDidMount() {
+        this.isComponentMounted = true;
+        this.fetchHotelProps();
+    }
+    
+    componentDidUpdate() {
+        if(this.isComponentMounted){
+            this.fetchHotelProps();
+        }
+    }
+
+    componentWillUnmount() {
+        this.isComponentMounted = false;
+    }
+
+    fetchHotelProps() {
 
         var myHotelHeaders = new Headers();
         myHotelHeaders.append("X-DevTours-Developer", "Postman Client");
@@ -32,10 +48,14 @@ class CardDetails extends Component {
         const urlHotel = 'https://afrecruitingfront-webapi-dev.azurewebsites.net/api/hotel/' + this.props.hotelId;
         fetch(urlHotel, requestHotelOptions)
             .then(response => response.json())
-            .then(hotel => this.setState({ hotel: hotel }))
+            .then(hotel => {
+                const newState = Object.assign({}, this.state);
+                newState.hotel = hotel;
+                this.setState(newState);
+            })
             .catch(error => console.log('error', error));
     }
-    
+
     render() {
         
         const hotel = this.state.hotel;
@@ -44,7 +64,7 @@ class CardDetails extends Component {
         const location = hotel.location;
         const streetAddress = hotel.address;
 
-        const handleCheckAvailabilityClick = this.props.handleCheckAvailabilityClick;
+        const handleClick = this.props.handleClick;
         const availability = this.props.availability;
         const offer = this.props.offer;
         const roomId = this.props.room.id;
@@ -66,7 +86,7 @@ class CardDetails extends Component {
                         hotelId={hotelId}
                         roomId={roomId}
                         offer={offer}
-                        handleCheckAvailabilityClick={handleCheckAvailabilityClick}
+                        handleClick={handleClick}
                     />
                 </div>
             </div>

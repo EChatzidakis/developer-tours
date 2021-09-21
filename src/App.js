@@ -12,27 +12,48 @@ class App extends Component {
     super();
     this.state = {
       content: {
-        currentFilter: {},
+        currentHomePageContent: {},
         hotelPage: {
           hotelItem: {},
           highlightedOffer: {
             roomId: '',
             offerId: ''
           }
-        }
+        },
+        filterDefault: true,
+        filterProps: {
+          locations: {
+            list: [],
+            selected: -1,
+            selectedId: -1
+          },
+          rating: 5,
+          numberOfResults: 10,
+          dates: DateFormatting({ type: 'default', date: '' }),
+        },
       },
-      dates: DateFormatting({type: 'default', date: ''}),//this.getDefaultDates(),
-      filter: '',
+      dates: DateFormatting({ type: 'default', date: '' }),
       isHomePage: true,
       bigHeader: true
     };
   }
 
   componentDidMount() {
-    this.getDefaultContent({type: 'default', date: ''});
+    //this.getDefaultContent({type: 'default', date: ''});
+    const filterProps = Object.assign({}, this.state.content.filterProps)
+    this.updateFilterResults(filterProps)
+    //scroll to top
+    window.scrollTo(0, 0);
   }
 
-  getDefaultContent() {
+  updateFilterResults = (filterProps) => {
+
+    const locationId = (filterProps.locations.selectedId.length > 0 ? filterProps.locations.selectedId : '');
+    const startDate = filterProps.dates.startDate;
+    const endDate = filterProps.dates.endDate;
+    const rating = filterProps.rating;
+    const top = filterProps.numberOfResults;
+    
     const myHeaders = new Headers();
     myHeaders.append("X-DevTours-Developer", "Postman Client");
     myHeaders.append("Cookie", "ARRAffinity=d69d338ae03baf15937f175e6830fb0fe6a73832b054a61d5de9f669d81f93fb; ARRAffinitySameSite=d69d338ae03baf15937f175e6830fb0fe6a73832b054a61d5de9f669d81f93fb");
@@ -43,11 +64,16 @@ class App extends Component {
       redirect: 'follow'
     };
 
-    const dates = this.state.dates;
-    const url = 'https://afrecruitingfront-webapi-dev.azurewebsites.net/api/availabilities?startDate=' + dates.startDate + '&endDate=' + dates.endDate + '&rating=3&skip=0&top=10'
+    //const dates = this.state.dates;
+    const url = 'https://afrecruitingfront-webapi-dev.azurewebsites.net/api/availabilities?location=' + locationId + '&startDate=' + startDate + '&endDate=' + endDate + '&rating=' + rating + '&skip=0&top=' + top;
+    console.log(url);
     fetch(url, requestOptions)
       .then(response => response.json())
-      .then(availabilities => this.setState({ content: { currentFilter: availabilities, hotelPage: {} } }))
+      .then(filterResults => {
+        const newState = Object.assign({}, this.state);
+        newState.content.currentHomePageContent = filterResults;
+        this.setState(newState);
+      })
       .catch(error => console.log('error', error));
   }
 
@@ -62,46 +88,28 @@ class App extends Component {
       redirect: 'follow'
     };
 
-    const currentFilter = this.state.content.currentFilter;
+    const newState = Object.assign({}, this.state);
     const url = "https://afrecruitingfront-webapi-dev.azurewebsites.net/api/hotel/" + hotelId;
     fetch(url, requestOptions)
       .then(response => response.json())
-      .then(hotel => this.setState({
-        isHomePage: false,
-        content: {
-          currentFilter: currentFilter,
-          hotelPage: { 
-            hotelItem: hotel,
-            highlightedOffer: {
-              roomId: roomId,
-              offerId: offerId
-            }
-          }
-        },
-        bigHeader: false
-      }))
+      .then(hotel => {
+        newState.isHomePage = false;
+        newState.bigHeader = false;
+        newState.content.hotelPage.hotelItem = hotel;
+        newState.content.hotelPage.highlightedOffer.roomId = roomId;
+        newState.content.hotelPage.highlightedOffer.offerId = offerId;
+        
+        this.setState(newState);
+      })
       .catch(error => console.log('error', error));
   }
 
-  getDefaultDates() {
-    let startDate = new Date();
-    let endDate = new Date();
-    startDate.setDate(startDate.getDate() + 1);
-    endDate.setDate(startDate.getDate() + 5);
-
-    const startDateFormatted = this.formatDate(startDate);
-    const endDateFormatted = this.formatDate(endDate);
-
-    return { startDate: startDateFormatted, endDate: endDateFormatted }
-  }
-
-  formatDate(date) {
-    const d = date;
-    return d.toISOString().split('T')[0] + 'T12:00:00.000Z';
-  }
-
-  handleCheckAvailabilityClick = (e) => {
-    const button = e.target;
+  /**
+   * redirects the user to the hotel page
+   * @param {event} event 
+   */
+  handleCheckAvailabilityClickEvent = (event) => {
+    const button = event.target;
     const hotelId = button.getAttribute('hotelid');
     const roomId = button.getAttribute('roomid');
     const offerId = button.getAttribute('offerid');
@@ -110,6 +118,17 @@ class App extends Component {
 
     //scroll to top
     window.scrollTo(0, 0);
+  }
+
+  /**
+   * returns the user to the home page.
+   * it keeps the latest filter used intact
+   */
+  handleReturnToHomePageClickEvent = (event) => {
+    const newState = Object.assign({}, this.state);
+    newState.isHomePage = true;
+    newState.bigHeader = true;
+    this.setState(newState);
   }
 
   render() {
@@ -122,11 +141,14 @@ class App extends Component {
       <>
         <Header
           bigHeader={bigHeader}
+          handleClick={this.handleReturnToHomePageClickEvent}
         />
         <MainContent
           isHomePage={isHomePage}
           content={content}
-          handleCheckAvailabilityClick={this.handleCheckAvailabilityClick}
+          dates={this.state.dates}
+          handleClick={this.handleCheckAvailabilityClickEvent}
+          updateFilterFunction={this.updateFilterResults}
         />
         <Footer
           showFooter={bigHeader}

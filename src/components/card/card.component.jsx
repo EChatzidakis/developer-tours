@@ -11,7 +11,7 @@ class Card extends Component {
     render() {
 
         //console.log(this.props);
-        const handleCheckAvailabilityClick = this.props.handleCheckAvailabilityClick;
+        const handleClick = this.props.handleClick;
         const item = this.props.item || {};
         const hotelId = item.hotelId;
         const availability = item.availability;
@@ -29,7 +29,7 @@ class Card extends Component {
                     room={room}
                     availability={availability}
                     offer={offer}
-                    handleCheckAvailabilityClick={handleCheckAvailabilityClick}
+                    handleClick={handleClick}
                 />
             </div>
         )

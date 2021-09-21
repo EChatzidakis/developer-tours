@@ -68,7 +68,7 @@ class HotelPageRooms extends Component {
                 <button
                     className={`btn-standard${extraButtonClasses}`}
                     disabled={!isRoomAvailable}
-                    onClick={this.handleClickEvent}
+                    onClick={this.props.handleClick}
                     >
                     Make Booking
                 </button>
@@ -109,23 +109,6 @@ class HotelPageRooms extends Component {
                 </span>
             </div>
         );
-    }
-
-    /**
-     * Event controller for selecting room.
-     * @param {event} e 
-     */
-    handleClickEvent = (e) => {
-        //const button = e.target;
-        const sections = [...document.getElementsByClassName('hotel-page-section')];
-        sections.map((section) => {
-            if (section.classList.contains("make-booking")) {
-                section.classList.remove('hidden');
-            }
-            else if (section.classList.contains("hotel-page-information-container") || section.classList.contains("hotel-rooms-container")) {
-                    section.classList.add('hidden');
-            }
-        });
     }
 
     render() {

@@ -8,7 +8,7 @@ export const OfferInformation = (props) => {
     //console.log(props);
     const roundNumbers = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
-    const handleCheckAvailabilityClick = props.handleCheckAvailabilityClick;
+    const handleClick = props.handleClick;
     const hotelId = props.hotelId
     const roomId = props.roomId;
     // to avoid silly lines of code I will take for granted that all currencies are in EUR
@@ -38,7 +38,7 @@ export const OfferInformation = (props) => {
 
             <button
                 className="btn-standard btn-active"
-                onClick={handleCheckAvailabilityClick}
+                onClick={handleClick}
                 hotelid={hotelId}
                 roomid={roomId}
                 offerid={offerId}

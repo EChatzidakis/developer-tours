@@ -16,7 +16,8 @@ class HotelPage extends Component {
         super(props);
         this.state = {
             sliderWidth: 0,
-            sliderHeight: 0
+            sliderHeight: 0,
+            showSubmitForm: false
         }
     }
 
@@ -25,13 +26,14 @@ class HotelPage extends Component {
      * Fires on window resize.
      */
     sliderResize = () => {
-        const newSliderWidth = (window.innerWidth < 975 ? 360 : 850);
-        const newSliderHeight = (newSliderWidth === 850 ? 478 : 203);
+        const newState = Object.assign({}, this.state);
+        newState.sliderWidth = (window.innerWidth < 975 ? 360 : 850);
+        newState.sliderHeight = (newState.sliderWidth === 850 ? 478 : 203);
 
         const currentWidth = this.state.sliderWidth;
 
-        if (newSliderWidth !== currentWidth) {
-            this.setState({ sliderWidth: newSliderWidth, sliderHeight: newSliderHeight })
+        if (newState.sliderWidth !== currentWidth) {
+            this.setState(newState);
         }
     }
 
@@ -63,6 +65,12 @@ class HotelPage extends Component {
             .then(response => response.json())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+    }
+
+    handleSelectAvailabilityClickEvent = () => {
+        const newState = Object.assign({}, this.state);
+        newState.showSubmitForm = true;
+        this.setState(newState);
     }
 
     componentDidMount() {
@@ -97,6 +105,8 @@ class HotelPage extends Component {
         const highlightedRoom = this.props.highlightedOffer.room;
         const highlightedOfferInfo = this.props.highlightedOffer.offer;
 
+        const showSubmitForm = this.state.showSubmitForm;
+
         return (
             <div className="hotel-page-container">
                 <div className="hotel-page-section hotel-page-header-container">
@@ -126,15 +136,16 @@ class HotelPage extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="hotel-page-section hotel-rooms-container">
+                <div className={`hotel-page-section hotel-rooms-container${showSubmitForm ? ' hidden' : ''}`}>
                     <HotelPageRooms
                         rooms={hotelRooms}
                         availableRoomId={highlightedRoomId}
                         offerId={highlightedOfferId}
                         highlightedOffer={highlightedOffer}
+                        handleClick={this.handleSelectAvailabilityClickEvent}
                     />
                 </div>
-                <div className="hotel-page-section make-booking hidden">
+                <div className={`hotel-page-section make-booking hidden${showSubmitForm ? '' : ' hidden'}}`}>
                     <MakeBooking 
                         availability={highlightedAvailability}
                         room={highlightedRoom}

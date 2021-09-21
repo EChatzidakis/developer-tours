@@ -9,8 +9,10 @@ export const Header = (props) => {
 
     return (
         <header className={`show-big-${isBig}`}>
-            <FcGlobe className="App-logo" />
-            <h1>DeveloperTours</h1>
+            <div className="header-content-container" onClick={props.handleClick}>
+                <FcGlobe className="App-logo" />
+                <h1>DeveloperTours</h1>
+            </div>
         </header>
     );
 }
