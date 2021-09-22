@@ -10,10 +10,7 @@ class CardDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hotel: {
-                location: { id: '', name: '' }
-            },
-
+            hotel: {},
         };
         this.isComponentMounted = false;
     }
@@ -23,8 +20,9 @@ class CardDetails extends Component {
         this.fetchHotelProps();
     }
     
-    componentDidUpdate() {
-        if(this.isComponentMounted){
+    componentDidUpdate(prevProps, prevState) {
+        const shouldFetch = prevState.hotel.id !== this.state.hotel.id;
+        if(this.isComponentMounted === true && shouldFetch){
             this.fetchHotelProps();
         }
     }
@@ -49,9 +47,11 @@ class CardDetails extends Component {
         fetch(urlHotel, requestHotelOptions)
             .then(response => response.json())
             .then(hotel => {
-                const newState = Object.assign({}, this.state);
-                newState.hotel = hotel;
-                this.setState(newState);
+                if(this.isComponentMounted === true){
+                    const newState = Object.assign({}, this.state);
+                    newState.hotel = hotel;
+                    this.setState(newState);
+                }
             })
             .catch(error => console.log('error', error));
     }
@@ -60,9 +60,6 @@ class CardDetails extends Component {
         
         const hotel = this.state.hotel;
         const hotelId = hotel.id;
-        const hotelName = hotel.name;
-        const location = hotel.location;
-        const streetAddress = hotel.address;
 
         const handleClick = this.props.handleClick;
         const availability = this.props.availability;
@@ -73,9 +70,7 @@ class CardDetails extends Component {
             <div className="details-container">
                 <div className="details-separator">
                     <HotelInformation
-                        name={hotelName}
-                        location={location}
-                        address={streetAddress}
+                        hotel={hotel}
                     />
                     <AvailabilityInformation
                         availability={availability}

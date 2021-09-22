@@ -13,19 +13,35 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import deLocale from 'date-fns/locale/de';
-import AdapterDateFns from '../../../node_modules/@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '../../../node_modules/@material-ui/lab/LocalizationProvider';
-import DatePicker from '../../../node_modules/@material-ui/lab/DatePicker';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import DatePicker from '@material-ui/lab/DatePicker';
 import TextField from '@mui/material/TextField';
 
 import './filter.styles.css'
 
-class Filter extends Component {
+class FilterAccordion extends Component {
+
+    // amenitiesLocale = [
+    //     { id: "terrace", title: "Terrace" },
+    //     { id: "balcony", title: "Balcony" },
+    //     { id: "seaside_view", title: "Seaside view" },
+    //     { id: "garden_view", title: "Garden view" },
+    //     { id: "breakfast_included", title: "Breakfast included" },
+    //     { id: "free_cancellation", id: "Free cancelation" },
+    //     { id: "free_parking", title: "Free Parking" },
+    //     { id: "fitness", title: "Fitness club" },
+    //     { id: "pool", title: "Pool" },
+    //     { id: "free_wifi", title: "Free Wifi" }
+    // ]
 
     constructor(props) {
         super(props);
-
         this.state = Object.assign({}, this.props.currentFilterProps);
+    }
+
+    componentDidMount() {
+        this.fetchLocations();
     }
 
     fetchLocations() {
@@ -87,14 +103,9 @@ class Filter extends Component {
         this.setState(newState)
     }
 
-    componentDidMount() {
-        this.fetchLocations();
-    }
-
     onFilterConfirm = () => {
-        console.log(this.state);
         const filterProps = Object.assign({}, this.state);
-        this.props.updateFilterFunction(filterProps);
+        this.props.updateFilterResultsFunction(filterProps);
     }
 
     renderLocationSelect() {
@@ -150,6 +161,7 @@ class Filter extends Component {
                         </div>
                         <div className="filter-elem-group inlined">
                             <div className="filter-item">
+                                <InputLabel id="top-select-label">Top</InputLabel>
                                 <ToggleButtonGroup
                                     color="primary"
                                     value={this.state.numberOfResults}
@@ -196,4 +208,4 @@ class Filter extends Component {
     }
 }
 
-export default Filter;
+export default FilterAccordion;

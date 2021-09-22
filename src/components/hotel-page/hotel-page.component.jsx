@@ -37,36 +37,7 @@ class HotelPage extends Component {
         }
     }
 
-    /**
-     * fires when the user submits his booking request
-     * @param {event} e 
-     */
-    submitBooking = (e) => {
-        e.preventDefault();
-        
-        var myHeaders = new Headers();
-        myHeaders.append("X-DevTours-Developer", "Postman Client");
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        myHeaders.append("Cookie", "ARRAffinity=d69d338ae03baf15937f175e6830fb0fe6a73832b054a61d5de9f669d81f93fb; ARRAffinitySameSite=d69d338ae03baf15937f175e6830fb0fe6a73832b054a61d5de9f669d81f93fb");
-
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("id", "asdf");
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-        const offerId = this.props.hotelPage.highlightedOffer.offerId;
-        const url ="https://afrecruitingfront-webapi-dev.azurewebsites.net/api/booking?=" + offerId;
-        fetch(url, requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-    }
-
+    
     handleSelectAvailabilityClickEvent = () => {
         const newState = Object.assign({}, this.state);
         newState.showSubmitForm = true;
@@ -150,7 +121,7 @@ class HotelPage extends Component {
                         availability={highlightedAvailability}
                         room={highlightedRoom}
                         offer={highlightedOfferInfo}
-                        onFormSubmit={this.submitBooking}
+                        submitBookingFormFunction={this.props.submitBookingFormFunction}
                     />
                 </div>
             </div>

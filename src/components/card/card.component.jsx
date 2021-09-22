@@ -10,7 +10,6 @@ class Card extends Component {
   
     render() {
 
-        //console.log(this.props);
         const handleClick = this.props.handleClick;
         const item = this.props.item || {};
         const hotelId = item.hotelId;

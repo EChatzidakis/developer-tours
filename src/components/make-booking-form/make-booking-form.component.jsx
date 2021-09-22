@@ -17,51 +17,50 @@ class MakeBooking extends Component {
                 adults: true,
                 room: true,
                 more: true
-            }
+            },
+            userName: ''
         };
-
-        this.phoneInputRef = React.createRef();
-        this.emailInputRef = React.createRef();
     }
 
     handleChange = (event) => {
 
+        const newState = Object.assign({}, this.state);
         const { id, value } = event.target;
-        const inputsValidation = {
-            name: true,
-            phone: true,
-            email: true,
-            adults: true,
-            room: true,
-            more: true
-        };
 
         switch (id) {
             case "inp-name":
-                inputsValidation.name = (value.match("^[a-zA-Z ]*$") === null ? false : true);
+                newState.inputsValidation.name = (value.match("^[a-zA-Z ]*$") === null ? false : true);
+                newState.userName = value;
                 break;
 
             case "inp-email":
-                inputsValidation.email = (value.match("^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$") === null ? false : true);
+                newState.inputsValidation.email = (value.match("^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$") === null ? false : true);
                 break;
 
             case "inp-phone":
-                inputsValidation.phone = (value.length < 10 ? false : true);
+                newState.inputsValidation.phone = (value.length < 10 ? false : true);
                 break;
 
             case "inp-adults":
-                inputsValidation.adults = (value > 0 ? true : false);
+                newState.inputsValidation.adults = (value > 0 ? true : false);
                 break;
             default:
                 break;
         }
 
-        const shouldChangeState = !(JSON.stringify(this.state.inputsValidation) === JSON.stringify(inputsValidation));
+        const shouldChangeState = !(JSON.stringify(this.state) === JSON.stringify(newState));
         if (shouldChangeState) {
-            const newState = Object.assign({}, this.state);
-            newState.inputsValidation = inputsValidation;
             this.setState(newState);
         }
+    }
+
+    onSubmitForm = (event) => {
+        event.preventDefault();
+        const bookingInfo = {
+            userName: this.state.userName,
+            offerId: this.props.offer.id
+        };
+        this.props.submitBookingFormFunction(bookingInfo);
     }
 
     render() {
@@ -163,7 +162,7 @@ class MakeBooking extends Component {
                             style={{ width: '100%' }}
                         />
                     </div>
-                    <button className="submit-form btn-standard" type="submit">Book The Rooms</button>
+                    <button className="submit-form btn-standard" onClick={this.onSubmitForm}>Book The Rooms</button>
                 </form>
             </>
         );
