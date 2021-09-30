@@ -11,7 +11,7 @@ export const  Footer = (props) => {
   const currentYear = new Date().getFullYear();
   return (
     <footer>
-      <p>Made by Stratos for AppsFactory - {currentYear}</p>
+      <p>Made by <a href="http://e-chatzidakis.com/" target="_blank">Stratos</a> - {currentYear}</p>
     </footer>
   );
 }
