@@ -184,6 +184,7 @@ class App extends Component {
     const content = this.state.content;
     const bigHeader = this.state.bigHeader;
     const showBookingStatus = this.state.showBookingStatus;
+    console.log("Hello World!");
 
     return (
       <>
